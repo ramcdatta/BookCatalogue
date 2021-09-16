@@ -24,13 +24,4 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     void deleteById(Long bookId);
 
-//    @Query("SELECT * FROM Book book JOIN author.author author")
-//    public List<Book> getJoinInformation();
-/*
-
-    @Query(nativeQuery =true,value = "SELECT * FROM Book as book WHERE book.employeeName NOT IN (:names)")   // Spring JPA In cause using native query
-    List<Employee> findByEmployeeNameNot(@Param("names") List<String> names);
-*/
-
-    //Book findByAuthor(String author);
 }
