@@ -33,11 +33,11 @@ public class BookService {
     }
 
 
-   /* public Book findByAuthor(String author) {
+    public List<Book> findByAuthor(String author) {
         log.info("Inside findByAuthor method of BookCatalogueRepository....");
-//        List<String> authors = Arrays.asList(author.split(","));
+        //List<String> authors = Arrays.asList(author.split(","));
         return bookRepository.findByAuthor(author);
-    }*/
+    }
 
     public Book findByIsbn(String isbn) {
         log.info("Inside findByAuthor method of BookCatalogueRepository....");

@@ -16,10 +16,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     List<Book> findByBookTitle(String bookTitle);
 
-   /* Book findByAuthor(ArrayList<String> author);
-    */
-   @Query("SELECT book FROM Book book WHERE book.IN (:authors)")     // 2. Spring JPA In cause using @Query
-   List<Book> findByEmployeeNames(@Param("names") List<String> authors);
+   @Query("SELECT book FROM Book book WHERE book.author IN (:author)")     // 2. Spring JPA In cause using @Query
+   List<Book> findByAuthor(@Param("author") String author);
 
     Book findByIsbn(String isbn);
 

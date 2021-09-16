@@ -35,11 +35,11 @@ public class BookCatalogueController {
         log.info("Inside findByBookTitle method of BookCatalogueController...");
         return bookService.findByBookTitle(bookTitle);
     }
-  /*  @GetMapping("/searchByAuthor/{author}")
-    public Book findByAuthor(@PathVariable("author") String author) {
+    @GetMapping("/searchByAuthor/{author}")
+    public List<Book> findByAuthor(@PathVariable("author") String author) {
         log.info("Inside findByAuthor method of BookCatalogueController...");
         return bookService.findByAuthor(author);
-    }*/
+    }
     @GetMapping("/searchByIsbn/{isbn}")
     public Book findByIsbn(@PathVariable("isbn") String isbn) {
         log.info("Inside findByIsbn method of BookCatalogueController...");
