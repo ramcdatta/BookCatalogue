@@ -20,7 +20,9 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long bookId;
     private String bookTitle;
-    private String author;
+    @OneToMany(targetEntity = Author.class,cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name ="ab_fk",referencedColumnName = "bookId")
+    private List<Author> author;
     @Column(unique = true)
     private String isbn;
     private Date publicationDate;
