@@ -1,6 +1,7 @@
 package com.microservice.bookcatalogue.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "book")
+@Builder
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

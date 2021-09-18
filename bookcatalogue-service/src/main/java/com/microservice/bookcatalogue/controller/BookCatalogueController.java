@@ -30,23 +30,23 @@ public class BookCatalogueController {
         log.info("Inside findBookById method of BookCatalogueController...");
         return bookService.findByBookId(bookId);
     }
-    @GetMapping("/searchByTitle/{bookTitle}")
+    @GetMapping("/title/{bookTitle}")
     public List<Book> findByBookTitle(@PathVariable("bookTitle") String bookTitle) {
         log.info("Inside findByBookTitle method of BookCatalogueController...");
         return bookService.findByBookTitle(bookTitle);
     }
-    @GetMapping("/searchByAuthor/{author}")
+    @GetMapping("/author/{author}")
     public List<Book> findByAuthor(@PathVariable("author") String author) {
         log.info("Inside findByAuthor method of BookCatalogueController...");
         return bookService.findByAuthor(author);
     }
-    @GetMapping("/searchByIsbn/{isbn}")
+    @GetMapping("/isbn/{isbn}")
     public Book findByIsbn(@PathVariable("isbn") String isbn) {
         log.info("Inside findByIsbn method of BookCatalogueController...");
         return bookService.findByIsbn(isbn);
     }
 
-    @PutMapping("/updateBook")
+    @PutMapping("/update")
     public ResponseEntity<String> updateBook(@RequestBody Book book) {
         try {
             bookService.updateBook(book);
@@ -56,7 +56,7 @@ public class BookCatalogueController {
             return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
         }
     }
-    @DeleteMapping("/deleteByBookId/{bookId}")
+    @DeleteMapping("/delete/{bookId}")
     public ResponseEntity<String> deleteById(@PathVariable("bookId") Long bookId) {
         log.info("Inside deleteByBookId method of BookCatalogueController...");
         try {
