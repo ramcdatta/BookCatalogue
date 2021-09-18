@@ -6,13 +6,14 @@ import com.microservice.bookcatalogue.repository.AuthorRepository;
 import com.microservice.bookcatalogue.repository.BookRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Consumer;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 @Slf4j
@@ -24,10 +25,29 @@ public class BookService {
     @Autowired
     private AuthorRepository authorRepository;
 
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+
+
+    private static String BOOK_ADD_EVENT = "BOOK_CREATED";
+
+    private static String BOOK_DELETE_EVENT = "BOOK_DELETED";
+
+    private static String BOOK_UPDATE_EVENT = "BOOK_UPDATED";
+
+    private static String KAFKA_SERVICE = "http://localhost:8080/bookCatalogue-kafka/producer?event=";
+
     public Book saveBook(Book book) {
         log.info("Inside saveBook method of BookCatalogueRepository....");
         if (null != book.getAuthor() && !book.getAuthor().isEmpty()) {
             book.getAuthor().forEach(author -> author.setBook(book));
+        }
+        Book resultBook = bookRepository.save(book);
+        if(null!=resultBook){
+            restTemplate().getForObject(KAFKA_SERVICE + book.getBookTitle() +"_"+ BOOK_ADD_EVENT
+                    ,String.class);
         }
         return bookRepository.save(book);
     }
@@ -57,6 +77,9 @@ public class BookService {
         log.info("Inside deleteByBookId method of BookCatalogueRepository....");
         try {
             bookRepository.deleteById(bookId);
+
+            restTemplate().getForObject(KAFKA_SERVICE + BOOK_DELETE_EVENT
+                        ,String.class);
         }catch(DataAccessException ex){
             throw new RuntimeException(ex.getMessage());
         }
@@ -72,5 +95,8 @@ public class BookService {
             book.getAuthor().forEach(author -> author.setBook(book));
         }
         bookRepository.save(book);
+
+        restTemplate().getForObject(KAFKA_SERVICE + book.getBookTitle() +"_"+ BOOK_UPDATE_EVENT
+                ,String.class);
     }
 }
