@@ -7,9 +7,11 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.ArrayList;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
-import java.util.Set;
+
 
 @Entity
 @Data
@@ -26,6 +28,8 @@ public class Book {
     @JoinColumn(name ="ab_fk",referencedColumnName = "bookId")
     private List<Author> author;
     @Column(unique = true)
+    @NotNull
+    @Size(min=13, message="ISBN need to be unique")
     private String isbn;
     private Date publicationDate;
 }

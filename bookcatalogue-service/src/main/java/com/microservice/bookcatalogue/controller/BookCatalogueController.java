@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -21,7 +22,7 @@ public class BookCatalogueController {
 
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
-    public Book saveBook (@RequestBody Book book){
+    public Book saveBook (@Valid @RequestBody  Book book){
         log.info("Inside saveBook method of BookCatalogueController....");
         return bookService.saveBook(book);
     }
