@@ -6,6 +6,7 @@ import com.microservice.bookcatalogue.repository.AuthorRepository;
 import com.microservice.bookcatalogue.repository.BookRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -25,10 +26,8 @@ public class BookService {
     @Autowired
     private AuthorRepository authorRepository;
 
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
+    @Autowired
+    private RestTemplate restTemplate;
 
 
     private static String BOOK_ADD_EVENT = "BOOK_CREATED";
@@ -37,7 +36,7 @@ public class BookService {
 
     private static String BOOK_UPDATE_EVENT = "BOOK_UPDATED";
 
-    private static String KAFKA_SERVICE = "http://localhost:8080/bookCatalogue-kafka/producer?event=";
+    private static String KAFKA_SERVICE = "http://KAFKA-SERVICE/bookCatalogue-kafka/producer?event=";
 
     public Book saveBook(Book book) {
         log.info("Inside saveBook method of BookCatalogueRepository....");
@@ -46,7 +45,7 @@ public class BookService {
         }
         Book resultBook = bookRepository.save(book);
         if(null!=resultBook){
-            restTemplate().getForObject(KAFKA_SERVICE + book.getBookTitle() +"_"+ BOOK_ADD_EVENT
+            restTemplate.getForObject(KAFKA_SERVICE + book.getBookTitle() +"_"+ BOOK_ADD_EVENT
                     ,String.class);
         }
         return bookRepository.save(book);
@@ -78,7 +77,7 @@ public class BookService {
         try {
             bookRepository.deleteById(bookId);
 
-            restTemplate().getForObject(KAFKA_SERVICE + BOOK_DELETE_EVENT
+            restTemplate.getForObject(KAFKA_SERVICE + BOOK_DELETE_EVENT
                         ,String.class);
         }catch(DataAccessException ex){
             throw new RuntimeException(ex.getMessage());
@@ -96,7 +95,7 @@ public class BookService {
         }
         bookRepository.save(book);
 
-        restTemplate().getForObject(KAFKA_SERVICE + book.getBookTitle() +"_"+ BOOK_UPDATE_EVENT
+        restTemplate.getForObject(KAFKA_SERVICE + book.getBookTitle() +"_"+ BOOK_UPDATE_EVENT
                 ,String.class);
     }
 }
