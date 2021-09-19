@@ -1,0 +1,19 @@
+server:
+  port: 9191
+
+spring:
+  application:
+    name: API-GATEWAY
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      routes:
+        - id: KAFKA-SERVICE
+          uri: lb://KAFKA-SERVICE
+          predicates:
+            - Path=/bookCatalogue-kafka/**
+        - id: BOOk-CATALOGUE-SERVICE
+          uri: lb://BOOk-CATALOGUE-SERVICE
+          predicates:
+            - Path=/bookCatalogues/**
