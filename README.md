@@ -25,7 +25,7 @@ DeleteBook. - http://localhost:9001/bookCatalogues/delete/1
 1. producer - /bookCatalogue-kafka/producer?event=<message>
 
 # SERVICE-REGISTRY
-
+<img src="img.png">
 
 ### Guides
 The following guides illustrate how to use some features concretely:
