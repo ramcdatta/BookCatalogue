@@ -4,11 +4,15 @@ To set up kafka & send message please follow below steps.
 
 1. download kafka from https://kafka.apache.org/downloads or you can use docker image also.
 2. Execute below commands from your kafka installed directory e.g D:\kafka_2.12-2.8.0
+      
+      
       a. Start Zookeeper
         zookeeper-server-start.bat config\zookeeper.properties
+        
     
        b. Open another shell - kafka is at localhost:9092
         kafka-server-start.bat config\server.properties
+        
     
        c. create input topic
         kafka-topics --zookeeper localhost:2181 --create --partitions  1 --topic book-catalogue_topic --replication-factor=1
