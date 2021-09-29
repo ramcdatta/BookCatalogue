@@ -48,8 +48,8 @@ The following guides illustrate how to use some features concretely:
 * Even though kafka-service is running in 9002 and book-catalogue-service in 9002 those service has to access through 9191
 * This is single entry for all microservices.
 
-# Starting the servers 
-
+# Starting the servers & Kafka Broker 
+# Please start Kafka broker and create the topic(one time activity) before staring the services refer book-Catalogue-Kafka project help for more details
 ### Sequence services should start with port
  Name                Port
 * service-registry : 8761
